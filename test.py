@@ -8,6 +8,9 @@ jsondoc = FileChooser.open('./capitals.json')
 assert isinstance(jsondoc, Document)    # jsondoc is an instance of a subclass of Document
 assert type(jsondoc) is JsonDocument    # jsondoc is, more specifically, a JsonDocument
 
+for item in jsondoc.read():             # print out the jsondoc using the read() generator
+    print(item)
+
 old_len = len(jsondoc.doc)              # keep track of the original document length
 jsondoc.append({                        # append something
     'state': 'Texas',
@@ -24,6 +27,9 @@ assert len(jsondoc.doc) == new_len      # see if the saved and reopened doc has 
 csvdoc = FileChooser.open('./capitals.csv')
 assert isinstance(csvdoc, Document)     # csvdoc is an instance of a subclass of Document
 assert type(csvdoc) is CsvDocument      # csvdoc is, more specifically, a CsvDocument
+
+for item in csvdoc.read():             # print out the csvdoc using the read() generator
+    print(item)
 
 old_len = len(csvdoc.doc)               # keep track of the original document length
 csvdoc.append({                         # append something

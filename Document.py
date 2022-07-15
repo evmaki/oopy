@@ -41,7 +41,42 @@ class JsonDocument(Document):
    def read(self):
       pass
 
-jsondoc = JsonDocument('./capitals.json')
-print(jsondoc)
-jsondoc.append({'state': 'Texas', 'capital': 'Austin'})
-jsondoc.save()
+import csv
+
+class CsvDocument(Document):
+   def __init__(self, path: str):
+      with open(path) as fp:
+         self.path = path
+         self.doc = []
+
+         for row in csv.reader(fp):
+            self.doc.append(row)
+
+   def __str__(self):
+      return str(self.doc)
+
+   def append(self, item: dict):
+      # { 'state': 'TX', 'capital': 'Austin' }
+      # ['TX', 'Austin']
+      self.doc.append(list(item.values()))
+
+   def save(self):
+      with open(self.path, 'w') as fp:
+         writer = csv.writer(fp)
+
+         for row in self.doc:
+            writer.writerow(row)
+
+   def read(self):
+      pass
+
+
+# jsondoc = JsonDocument('./capitals.json')
+# print(jsondoc)
+# jsondoc.append({'state': 'Texas', 'capital': 'Austin'})
+# jsondoc.save()
+
+# csvdoc = CsvDocument('./capitals.csv')
+# csvdoc.append({ 'state': 'TX', 'capital': 'Austin' })
+# print(csvdoc)
+# csvdoc.save()
